@@ -8,7 +8,7 @@ ul,li{ margin:0; padding:0; list-style:none}
 /* Layout 框架
 ------------------------------------------------------------------------*/
 /* Header */
-#header{ margin:0; padding:0; height:110px; /* overflow:hidden;  */background:#f5f5f5}
+#header{ margin:0; padding:0; height:46px; /* overflow:hidden;  */background:#f5f5f5}
 
 /* Footer */
 #footer{ padding:8px; height:18px; font-weight:bold; color:#ccc; background:#666; }
@@ -20,8 +20,8 @@ ul,li{ margin:0; padding:0; list-style:none}
 #content{ background:#fff; border-left:1px solid #ccc}
 
 /* header */
-.header { background: url(../images/top_bg.gif) no-repeat center top #fff; border-top: 3px solid #B80000; height: 36px; padding: 10px;}
-.logo{ float:left}
+.header { background: url(../images/top_bg.gif) no-repeat center top #fff; height: 62px;}
+.logo{ float:left;padding:10px;}
 .login { color: #999; height: 36px; line-height: 36px; padding: 0 10px; text-align: right;}
 .login span { padding:0 5px;}
 .login a { color:#CC0000;}
@@ -500,4 +500,3 @@ a.chooseItem:active{background: url(../images/choose.gif) no-repeat 0 -54px; tex
 .chooseList{ position:absolute; border:1px solid #c0c0c0; padding:10px; background:#fff; border-radius:5px; left:96px; top:28px;}
 
 .tdalt div{ clear:both}
-
