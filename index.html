@@ -7,6 +7,7 @@
     <script class="jsbin" src="resources/easyui/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="resources/easyui/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/easyui/themes/icon.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/reset.css">
     <link rel="stylesheet" type="text/css" href="resources/css/common.css">
     <link rel="stylesheet" type="text/css" href="resources/css/style.css">
     <link rel="stylesheet" type="text/css" href="resources/css/ddsmoothmenu.css">
@@ -35,168 +36,45 @@
         <div id="headertop">
             <div class="header">
                 <div class="logo">
+                  <a href="/">
                     <img alt="水利项目" height="30px" width="220px" src="../../resources/images/logo.png">
+                  </a>
                 </div>
                 <div class="navigation" style="float:right;">
                     <div id="smoothmenu1" class="ddsmoothmenu">
                         <ul id="topMenu">
                             <li style="z-index: 10000;">
-                                <a href="javascript:void(0)" class="easyui-linkbutton" style="width:100%" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'">数据管理</a>
+                                <a href="javascript:void(0)" class="easyui-linkbutton  menuBtn" openhref="dataManage.html" style="width:100%" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'">数据管理</a>
+                              </li>
                                 <li style="z-index: 10000;">
-                                    <a href="javascript:void(0)" class="easyui-linkbutton" style="width:100%" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'">洪水设计</a>
+                                    <a href="javascript:void(0)" class="easyui-linkbutton menuBtn" openhref="floodDesign.html" style="width:100%" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'">洪水设计</a>
                                 </li>
                                 <li style="z-index: 10000;">
-                                    <a href="javascript:void(0)" class="easyui-linkbutton" style="width:100%" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'">防洪调度</a>
+                                    <a href="javascript:void(0)" class="easyui-linkbutton menuBtn" openhref="floodContlOpera.html" style="width:100%" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'">防洪调度</a>
                                 </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- <div class="mainnav"> -->
-        <!-- Main导航 -->
-
-        <!-- Main导航 End -->
-        <!-- <ul id="topMenu">
-		</ul> -->
-        <!-- </div> -->
     </div>
-    <!-- 左侧 -->
-    <div data-options="region:'west', split:true, title:'&nbsp;'" id="nav">
-        <div class="leftsidebar">
-            <ul id="leftMenu">
-
-            </ul>
-        </div>
-    </div>
+  <div data-options="region:'center'">
+    <iframe id="frameContent" src="home.html" width="100%" height="100%"  frameborder="no" border="0" marginwidth="0" marginheight="0" ></iframe>
+  </div>
     <!-- 中间 Content -->
-    <div data-options="region:'center'">
-        <!-- 面包屑 + 查询区 + 表格 +翻页 -->
-        <div class="easyui-layout" data-options="fit:true,region:'center'">
-            <!-- 面包屑 -->
 
-            <!-- Content -->
-            <div id="content" data-options="region:'center'">
-                <div class="easyui-tabs" fit="true" border="false" id="tabs">
-                    <div title="首页"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- 版权load: footer.html -->
     <div data-options="region:'south', border:false" id="footer">
         Ambow CopyRight 2016.06
     </div>
-    <script>
-        $(function() {
-            //动态菜单数据
-            var treeData = [{
-                text: "菜单",
-                children: [{
-                    text: "一级菜单1",
-                    attributes: {
-                        url: ""
-                    }
-                }, {
-                    text: "一级菜单2",
-                    attributes: {
-                        url: ""
-                    }
-                }, {
-                    text: "一级菜单3",
-                    state: "closed",
-                    children: [{
-                        text: "二级菜单1",
-                        attributes: {
-                            url: ""
-                        }
-                    }, {
-                        text: "二级菜单2",
-                        attributes: {
-                            url: ""
-                        }
-                    }, {
-                        text: "二级菜单3",
-                        attributes: {
-                            url: ""
-                        }
-                    }]
-                }]
-            }];
-
-            //实例化树形菜单
-            $("#nav").tree({
-                data: treeData,
-                lines: true,
-                onClick: function(node) {
-                    if (node.attributes) {
-                        Open(node.text, node.attributes.url);
-                    }
-                }
-            });
-            //在右边center区域打开菜单，新增tab
-            function Open(title, url) {
-
-                if ($("#tabs").tabs('exists', title)) {
-                    $('#tabs').tabs('select', title);
-                } else {
-                    var content = '<iframe scrolling="no" frameborder="0"  src="http://www.baidu.com" style="width:100%;height:100%;"></iframe>';
-                    $('#tabs').tabs('add', {
-                        title: title,
-                        closable: true,
-                        content: content
-                    });
-                }
-            }
-
-            //绑定tabs的右键菜单
-            $("#tabs").tabs({
-                onContextMenu: function(e, title) {
-                    e.preventDefault();
-                    $('#tabsMenu').menu('show', {
-                        left: e.pageX,
-                        top: e.pageY
-                    }).data("tabTitle", title);
-                }
-            });
-
-            //实例化menu的onClick事件
-            $("#tabsMenu").menu({
-                onClick: function(item) {
-                    CloseTab(this, item.name);
-                }
-            });
-
-            //几个关闭事件的实现
-            function CloseTab(menu, type) {
-                var curTabTitle = $(menu).data("tabTitle");
-                var tabs = $("#tabs");
-
-                if (type === "close") {
-                    tabs.tabs("close", curTabTitle);
-                    return;
-                }
-
-                var allTabs = tabs.tabs("tabs");
-                var closeTabsTitle = [];
-
-                $.each(allTabs, function() {
-                    var opt = $(this).panel("options");
-                    if (opt.closable && opt.title != curTabTitle && type === "Other") {
-                        closeTabsTitle.push(opt.title);
-                    } else if (opt.closable && type === "All") {
-                        closeTabsTitle.push(opt.title);
-                    }
-                });
-
-                for (var i = 0; i < closeTabsTitle.length; i++) {
-                    tabs.tabs("close", closeTabsTitle[i]);
-                }
-            }
-        });
-    </script>
+  <script type="text/javascript">
+      $('.menuBtn').click(function(){
+        $(this).parent().parent().find('a').removeClass('l-btn-plain-selected');
+        $(this).addClass('l-btn-plain-selected');
+      $("#frameContent").attr('src',$(this).attr('openhref'));
+      })
+  </script>
 </body>
 
 </html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script class="jsbin" src="resources/easyui/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="resources/easyui/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="resources/easyui/themes/icon.css">
+      <link rel="stylesheet" type="text/css" href="resources/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="resources/css/common.css">
+  <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+  <link rel="stylesheet" type="text/css" href="resources/css/ddsmoothmenu.css">
+  <script type="text/javascript" src="resources/easyui/jquery.easyui.min.js"></script>
+</head>
+<body class="easyui-layout" >
+
+<!-- 左侧 -->
+<div data-options="region:'west', split:true, title:'洪水设计'" title="" id="nav">
+    <div class="leftsidebar">
+        <ul id="leftMenu">
+
+        </ul>
+    </div>
+</div>
+<div data-options="region:'center'">
+    <div class="easyui-layout" data-options="fit:true,region:'center'">
+
+        <!-- Content -->
+        <div id="content" data-options="region:'center'">
+            <div class="easyui-tabs" fit="true" border="false" id="tabs">
+                <div title="首页"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        //动态菜单数据
+        var treeData = [{
+            text: "菜单",
+            children: [{
+                text: "一级菜单1",
+                attributes: {
+                    url: ""
+                }
+            }, {
+                text: "一级菜单2",
+                attributes: {
+                    url: ""
+                }
+            }, {
+                text: "一级菜单3",
+                state: "closed",
+                children: [{
+                    text: "二级菜单1",
+                    attributes: {
+                        url: ""
+                    }
+                }, {
+                    text: "二级菜单2",
+                    attributes: {
+                        url: ""
+                    }
+                }, {
+                    text: "二级菜单3",
+                    attributes: {
+                        url: ""
+                    }
+                }]
+            }]
+        }];
+
+        //实例化树形菜单
+        $("#nav").tree({
+            data: treeData,
+            lines: true,
+            onClick: function(node) {
+                if (node.attributes) {
+                    Open(node.text, node.attributes.url);
+                }
+            }
+        });
+        //在右边center区域打开菜单，新增tab
+        function Open(title, url) {
+
+            if ($("#tabs").tabs('exists', title)) {
+                $('#tabs').tabs('select', title);
+            } else {
+                var content = '<iframe scrolling="no" frameborder="0"  src="http://www.baidu.com" style="width:100%;height:100%;"></iframe>';
+                $('#tabs').tabs('add', {
+                    title: title,
+                    closable: true,
+                    content: content
+                });
+            }
+        }
+
+        //绑定tabs的右键菜单
+        $("#tabs").tabs({
+            onContextMenu: function(e, title) {
+                e.preventDefault();
+                $('#tabsMenu').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                }).data("tabTitle", title);
+            }
+        });
+
+        //实例化menu的onClick事件
+        $("#tabsMenu").menu({
+            onClick: function(item) {
+                CloseTab(this, item.name);
+            }
+        });
+
+        //几个关闭事件的实现
+        function CloseTab(menu, type) {
+            var curTabTitle = $(menu).data("tabTitle");
+            var tabs = $("#tabs");
+
+            if (type === "close") {
+                tabs.tabs("close", curTabTitle);
+                return;
+            }
+
+            var allTabs = tabs.tabs("tabs");
+            var closeTabsTitle = [];
+
+            $.each(allTabs, function() {
+                var opt = $(this).panel("options");
+                if (opt.closable && opt.title != curTabTitle && type === "Other") {
+                    closeTabsTitle.push(opt.title);
+                } else if (opt.closable && type === "All") {
+                    closeTabsTitle.push(opt.title);
+                }
+            });
+
+            for (var i = 0; i < closeTabsTitle.length; i++) {
+                tabs.tabs("close", closeTabsTitle[i]);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
