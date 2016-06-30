@@ -2,145 +2,311 @@
 <html>
 
 <head>
-  <script class="jsbin" src="resources/easyui/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="resources/easyui/themes/default/easyui.css">
-  <link rel="stylesheet" type="text/css" href="resources/easyui/themes/icon.css">
-      <link rel="stylesheet" type="text/css" href="resources/css/reset.css">
-  <link rel="stylesheet" type="text/css" href="resources/css/common.css">
-  <link rel="stylesheet" type="text/css" href="resources/css/style.css">
-  <link rel="stylesheet" type="text/css" href="resources/css/ddsmoothmenu.css">
-  <script type="text/javascript" src="resources/easyui/jquery.easyui.min.js"></script>
+    <script class="jsbin" src="resources/easyui/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="resources/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="resources/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/common.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/ddsmoothmenu.css">
+    <link rel="stylesheet" type="text/css" href="resources/zTree/css/zTreeStyle/zTreeStyle.css">
+    <script type="text/javascript" src="resources/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="resources/zTree/js/jquery.ztree.all.min.js"></script>
+    <script type="text/javascript" src="resources/highcharts/js/highcharts.js"></script>
 </head>
-<body class="easyui-layout" >
 
-<!-- 左侧 -->
-<div data-options="region:'west', split:true, title:'数据管理'" title="" id="nav">
-    <div class="leftsidebar">
-        <ul id="leftMenu">
-
-        </ul>
-    </div>
-</div>
-<div data-options="region:'center'">
-    <div class="easyui-layout" data-options="fit:true,region:'center'">
-
-        <!-- Content -->
-        <div id="content" data-options="region:'center'">
-            <div class="easyui-tabs" fit="true" border="false" id="tabs">
-                <div title="首页"></div>
+<body class="easyui-layout">
+    <div data-options="region:'north', border:false" id="header">
+        <div id="headertop">
+            <div class="header">
+                <div class="logo">
+                    <a href="/">
+                        <img alt="水利项目" height="30px" width="220px" src="../../resources/images/logo.png">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <div data-options="region:'west'" title="" style="width:250px;">
+        <div class="easyui-layout" style="height:100%;">
+            <div data-options="region:'north',collapsible:false" title="数据管理" style="height:30%;padding-top:2px;overflow-y:scroll;">
+                <div id="leftMenu">
+                </div>
+            </div>
+            <div data-options="region:'center'" title="站点信息" style="height:50%;padding-top:2px;overflow-y:scroll;">
+                <ul id="treeDemo" class="ztree"></ul>
+            </div>
+            <div data-options="region:'south'" class="easyui-panel" style="height:20%;padding-top:2px;">
+                <form id="ff" method="post">
+                    <table cellpadding="5">
+                        <tr>
+                            <td>开始时间:</td>
+                            <td>
+                                <input class="easyui-datebox" data-options="sharedCalendar:'#cc'" data-options="required:true">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>结束时间:</td>
+                            <td>
+                                <input class="easyui-datebox" data-options="sharedCalendar:'#cc'" data-options="required:true">
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="text-align:left;padding:10px 0 10px 50px">
+                        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">查询</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center'">
+        <div class="easyui-layout" data-options="fit:true,region:'center'">
 
-<script>
-    $(function() {
-        //动态菜单数据
-        var treeData = [{
-            text: "菜单",
-            children: [{
-                text: "一级菜单1",
-                attributes: {
-                    url: ""
-                }
-            }, {
-                text: "一级菜单2",
-                attributes: {
-                    url: ""
-                }
-            }, {
-                text: "一级菜单3",
-                state: "closed",
+            <!-- Content -->
+            <div id="content" data-options="region:'center'">
+                <div class="easyui-tabs" fit="true" border="false" id="tabs">
+                    <div title="数据管理">
+                        <div class="easyui-layout" data-options="fit:true">
+                            <div data-options="region:'west'" style="width:50%;padding:10px">
+                                <div id="container" style="padding:20px;"></div>
+                            </div>
+                            <div data-options="region:'center'" style="padding:2px;">
+                                <table class="easyui-datagrid" title="完量工程(XX站点)" style="width:100%;height:100%;" data-options="singleSelect:true,url:'/server/datagrid_data1.json',method:'get'">
+                                    <thead>
+                                        <tr>
+                                            <th data-options="field:'itemid',width:180">编号</th>
+                                            <th data-options="field:'productid',width:200">时间</th>
+                                            <th data-options="field:'listprice',width:180,align:'right'">流量</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cc" class="easyui-calendar"></div>
+    <script>
+        $(function() {
+            //动态菜单数据
+            var treeData = [{
+                text: "水汶信息",
                 children: [{
-                    text: "二级菜单1",
+                    text: "流量查询",
                     attributes: {
                         url: ""
                     }
                 }, {
-                    text: "二级菜单2",
-                    attributes: {
-                        url: ""
-                    }
-                }, {
-                    text: "二级菜单3",
+                    text: "水位查询",
                     attributes: {
                         url: ""
                     }
                 }]
-            }]
-        }];
+            }, {
+                text: "静态曲线"
+            }];
 
-        //实例化树形菜单
-        $("#nav").tree({
-            data: treeData,
-            lines: true,
-            onClick: function(node) {
-                if (node.attributes) {
-                    Open(node.text, node.attributes.url);
+            //实例化树形菜单
+            $("#leftMenu").tree({
+                data: treeData,
+                lines: true,
+                onClick: function(node) {
+                    if (node.attributes) {
+                        Open(node.text, node.attributes.url);
+                    }
+                }
+            });
+            //在右边center区域打开菜单，新增tab
+            function Open(title, url) {
+
+                if ($("#tabs").tabs('exists', title)) {
+                    $('#tabs').tabs('select', title);
+                } else {
+                    var content = '<iframe scrolling="no" frameborder="0"  src="http://www.baidu.com" style="width:100%;height:100%;"></iframe>';
+                    $('#tabs').tabs('add', {
+                        title: title,
+                        closable: true,
+                        content: content
+                    });
                 }
             }
-        });
-        //在右边center区域打开菜单，新增tab
-        function Open(title, url) {
 
-            if ($("#tabs").tabs('exists', title)) {
-                $('#tabs').tabs('select', title);
-            } else {
-                var content = '<iframe scrolling="no" frameborder="0"  src="http://www.baidu.com" style="width:100%;height:100%;"></iframe>';
-                $('#tabs').tabs('add', {
-                    title: title,
-                    closable: true,
-                    content: content
-                });
-            }
-        }
-
-        //绑定tabs的右键菜单
-        $("#tabs").tabs({
-            onContextMenu: function(e, title) {
-                e.preventDefault();
-                $('#tabsMenu').menu('show', {
-                    left: e.pageX,
-                    top: e.pageY
-                }).data("tabTitle", title);
-            }
-        });
-
-        //实例化menu的onClick事件
-        $("#tabsMenu").menu({
-            onClick: function(item) {
-                CloseTab(this, item.name);
-            }
-        });
-
-        //几个关闭事件的实现
-        function CloseTab(menu, type) {
-            var curTabTitle = $(menu).data("tabTitle");
-            var tabs = $("#tabs");
-
-            if (type === "close") {
-                tabs.tabs("close", curTabTitle);
-                return;
-            }
-
-            var allTabs = tabs.tabs("tabs");
-            var closeTabsTitle = [];
-
-            $.each(allTabs, function() {
-                var opt = $(this).panel("options");
-                if (opt.closable && opt.title != curTabTitle && type === "Other") {
-                    closeTabsTitle.push(opt.title);
-                } else if (opt.closable && type === "All") {
-                    closeTabsTitle.push(opt.title);
+            //绑定tabs的右键菜单
+            $("#tabs").tabs({
+                onContextMenu: function(e, title) {
+                    e.preventDefault();
+                    $('#tabsMenu').menu('show', {
+                        left: e.pageX,
+                        top: e.pageY
+                    }).data("tabTitle", title);
                 }
             });
 
-            for (var i = 0; i < closeTabsTitle.length; i++) {
-                tabs.tabs("close", closeTabsTitle[i]);
+            //实例化menu的onClick事件
+            $("#tabsMenu").menu({
+                onClick: function(item) {
+                    CloseTab(this, item.name);
+                }
+            });
+
+            //几个关闭事件的实现
+            function CloseTab(menu, type) {
+                var curTabTitle = $(menu).data("tabTitle");
+                var tabs = $("#tabs");
+
+                if (type === "close") {
+                    tabs.tabs("close", curTabTitle);
+                    return;
+                }
+
+                var allTabs = tabs.tabs("tabs");
+                var closeTabsTitle = [];
+
+                $.each(allTabs, function() {
+                    var opt = $(this).panel("options");
+                    if (opt.closable && opt.title != curTabTitle && type === "Other") {
+                        closeTabsTitle.push(opt.title);
+                    } else if (opt.closable && type === "All") {
+                        closeTabsTitle.push(opt.title);
+                    }
+                });
+
+                for (var i = 0; i < closeTabsTitle.length; i++) {
+                    tabs.tabs("close", closeTabsTitle[i]);
+                }
             }
-        }
-    });
-</script>
+            var zTree1;
+            var setting = {
+                check: {
+                    enable: true
+                },
+
+                callback: {
+                    beforeExpand: zTreeBeforeExpand,
+                    change: zTreeOnChange
+                }
+            };
+            var isGetNodes = false;
+            var curParentNode;
+
+            function zTreeBeforeExpand(treeId, treeNode) {
+                if (!isGetNodes && treeNode.isParent && (!treeNode.nodes || treeNode.nodes.length == 0)) {
+                    curParentNode = treeNode; //当前父节点
+                    isGetNodes = true;
+                    var addvcd = curParentNode.addvcd; //当前节点的行政区划码
+                    var level = curParentNode.level;
+                    if (level > 1) {
+                        return true;
+                    }
+                    getChildNodes(addvcd, level, false);
+                    return false;
+
+                } else if (isGetNodes && treeNode.isParent && (!treeNode.nodes || treeNode.nodes.length == 0)) {
+                    alert("有其他节点正在下载数据中，请稍后展开节点...");
+                    return false;
+                } else if (isGetNodes && treeNode == curParentNode) {
+                    alert("该节点正在下载数据中，请稍后展开节点...");
+                    return false;
+                }
+                return true;
+            }
+
+            /*
+             *树形结构选择节点前
+             */
+            function zTreeOnChange(event, treeId, treeNode) {
+                if (!isGetNodes && treeNode.isParent && (!treeNode.nodes || treeNode.nodes.length == 0)) {
+                    //debugger;
+                    curParentNode = treeNode; //当前父节点
+                    isGetNodes = true;
+                    var addvcd = curParentNode.addvcd; //当前节点的行政区划码
+                    var level = curParentNode.level;
+                    getChildNodes(addvcd, level, true);
+                    return false;
+
+                } else if (isGetNodes && treeNode.isParent && (!treeNode.nodes || treeNode.nodes.length == 0)) {
+                    alert("有其他节点正在下载数据中，请稍后展开节点...");
+                    return false;
+                } else if (isGetNodes && treeNode == curParentNode) {
+                    alert("该节点正在下载数据中，请稍后展开节点...");
+                    return false;
+                }
+                return true;
+            }
+
+            function getFirstNodes() {
+                setting.checkType = {
+                    "Y": 'ps',
+                    "N": 'ps'
+                };
+                $.getJSON('/server/ReservoirLeftTree.json', function(ret) {
+                    console.log($("#treeDemo"));
+
+                    zTree1 = $.fn.zTree.init($("#treeDemo"), setting, ret);
+
+                    isGetNodes = false;
+
+                });
+            }
+
+            function getChildNodes() {
+                $.getJSON('/server/ReservoirChildTree.json', function(json) {
+                    if (curParentNode)
+                        zTree1.addNodes(curParentNode, json);
+
+
+                    isGetNodes = false;
+
+                });
+            }
+
+            getFirstNodes();
+
+            function loadCharts() {
+                $('#container').highcharts({
+                    title: {
+                        text: '',
+                        x: -20 //center
+                    },
+
+                    xAxis: {
+                        categories: ['2016-1-1', '2016-1-2', '2016-1-3', '2016-1-4', '2016-1-5', '2016-1-6', '2016-1-7', '2016-1-8', '2016-1-9', '2016-1-10', '2016-1-11', '2016-1-12']
+                    },
+                    yAxis: {
+                        title: {
+                            text: '水位 (M)'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    tooltip: {
+                        valueSuffix: '°C'
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        borderWidth: 0
+                    },
+                    series: [{
+                        name: 'Tokyo',
+                        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                    } ]
+                });
+            }
+
+            loadCharts();
+        });
+    </script>
 
 </body>
+
 </html>

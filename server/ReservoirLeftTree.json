@@ -1,0 +1,61 @@
+[{
+    "name": "南宁市",
+    "addvcd": "450100",
+    "isParent": true
+}, {
+    "name": "柳州市",
+    "addvcd": "450200",
+    "isParent": true
+}, {
+    "name": "桂林市",
+    "addvcd": "450300",
+    "isParent": true
+}, {
+    "name": "梧州市",
+    "addvcd": "450400",
+    "isParent": true
+}, {
+    "name": "北海市",
+    "addvcd": "450500",
+    "isParent": true
+}, {
+    "name": "防城港市",
+    "addvcd": "450600",
+    "isParent": true
+}, {
+    "name": "钦州市",
+    "addvcd": "450700",
+    "isParent": true
+}, {
+    "name": "贵港市",
+    "addvcd": "450800",
+    "isParent": true
+}, {
+    "name": "玉林市",
+    "addvcd": "450900",
+    "isParent": true
+}, {
+    "name": "百色市",
+    "addvcd": "451000",
+    "isParent": true
+}, {
+    "name": "贺州市",
+    "addvcd": "451100",
+    "isParent": true
+}, {
+    "name": "河池市",
+    "addvcd": "451200",
+    "isParent": true
+}, {
+    "name": "来宾市",
+    "addvcd": "451300",
+    "isParent": true
+}, {
+    "name": "崇左市",
+    "addvcd": "451400",
+    "isParent": true
+}, {
+    "name": "越南高平市",
+    "addvcd": "459900",
+    "isParent": true
+}]

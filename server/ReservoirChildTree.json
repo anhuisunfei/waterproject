@@ -1,0 +1,53 @@
+[{
+    "name": "南宁市市辖区",
+    "addvcd": "450101",
+    "isParent": false
+}, {
+    "name": "南宁市兴宁区",
+    "addvcd": "450102",
+    "isParent": false
+}, {
+    "name": "南宁市青秀区",
+    "addvcd": "450103",
+    "isParent": false
+}, {
+    "name": "南宁市江南区",
+    "addvcd": "450105",
+    "isParent": false
+}, {
+    "name": "南宁市西乡塘区",
+    "addvcd": "450107",
+    "isParent": false
+}, {
+    "name": "南宁市良庆区",
+    "addvcd": "450108",
+    "isParent": false
+}, {
+    "name": "南宁市邕宁区",
+    "addvcd": "450109",
+    "isParent": false
+}, {
+    "name": "武鸣县",
+    "addvcd": "450122",
+    "isParent": false
+}, {
+    "name": "隆安县",
+    "addvcd": "450123",
+    "isParent": false
+}, {
+    "name": "马山县",
+    "addvcd": "450124",
+    "isParent": false
+}, {
+    "name": "上林县",
+    "addvcd": "450125",
+    "isParent": false
+}, {
+    "name": "宾阳县",
+    "addvcd": "450126",
+    "isParent": false
+}, {
+    "name": "横县",
+    "addvcd": "450127",
+    "isParent": false
+}]
